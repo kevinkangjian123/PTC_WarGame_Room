@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-war-bg: #F5F6FA;
+  --color-war-card: #FFFFFF;
+  --color-war-border: #DFE6E9;
+  --color-war-accent: #00A651;
+  --color-war-accent-light: #00C962;
+  --color-war-accent-dark: #008541;
+  --color-war-text: #2D3436;
+  --color-war-text-light: #636E72;
+  --color-war-danger: #E74C3C;
+  --color-war-blue: #3498DB;
+  --color-war-orange: #F39C12;
+}
+
+@layer base {
+  body {
+    @apply bg-war-bg text-war-text font-sans antialiased selection:bg-war-accent/20;
+  }
+}
+
+.glass-panel {
+  @apply bg-war-card/90 backdrop-blur-md border border-war-border rounded-xl shadow-sm;
+}
+
+.war-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.war-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.war-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-war-border rounded-full hover:bg-zinc-300 transition-colors;
+}
+
+.ptc-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ptc-shadow-lg {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Custom animations */
+.animate-in {
+  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

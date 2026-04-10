@@ -1,0 +1,5 @@
+{
+  "name": "Coze 项目重构",
+  "description": "从 Coze 平台迁移并重构的 AI 应用，使用 Gemini API 和现代前端技术栈。",
+  "requestFramePermissions": []
+}
