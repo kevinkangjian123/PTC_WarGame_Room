@@ -7,7 +7,7 @@ import cors from 'cors';
 import Database from 'better-sqlite3';
 import multer from 'multer';
 import fs from 'fs';
-import { analyzeStrategy } from './src/services/gemini.js';
+import { analyzeStrategy } from './src/services/gemini';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

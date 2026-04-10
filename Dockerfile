@@ -1,5 +1,5 @@
-# Use Node.js 20 as the base image
-FROM node:20-slim AS builder
+# Use full Node image for building native modules
+FROM node:20 AS builder
 
 WORKDIR /app
 
@@ -16,19 +16,22 @@ RUN npm run build
 # Production image
 FROM node:20-slim
 
+# Install runtime dependencies for better-sqlite3
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Install production dependencies only
+# Copy package files
 COPY package*.json ./
+
+# Install production dependencies
 RUN npm install --omit=dev
 
-# Copy build artifacts and server code
+# Copy build artifacts and all source code needed for tsx
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/src ./src
 COPY --from=builder /app/server.ts ./
 COPY --from=builder /app/tsconfig.json ./
-
-# Install tsx to run the server
-RUN npm install -g tsx
 
 # Expose the port
 EXPOSE 3000
@@ -36,5 +39,5 @@ EXPOSE 3000
 # Set environment variables
 ENV NODE_ENV=production
 
-# Start the server
-CMD ["tsx", "server.ts"]
+# Start the server using the locally installed tsx
+CMD ["npx", "tsx", "server.ts"]
