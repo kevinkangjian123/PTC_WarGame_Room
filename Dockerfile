@@ -36,7 +36,7 @@ COPY --from=builder /app/dist ./dist
 RUN mkdir -p uploads && chmod 777 uploads
 
 # Expose the port
-EXPOSE 3000
+EXPOSE 8080
 
 # Set environment variables
 ENV NODE_ENV=production

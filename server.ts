@@ -20,7 +20,7 @@ async function startServer() {
     HAS_GEMINI_KEY: !!process.env.GEMINI_API_KEY
   });
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // Database initialization
   let db: any;
