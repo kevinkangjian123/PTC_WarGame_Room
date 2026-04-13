@@ -48,6 +48,12 @@ async function startServer() {
   app.use(cors());
   app.use(express.json());
 
+  // Request logging middleware
+  app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+  });
+
   // API Routes
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'PTC War Room Server is running' });
@@ -116,10 +122,24 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    // In production, the server.js is inside the dist folder
+    // We want to serve the static files from the same folder
+    const distPath = __dirname; 
+    console.log(`Serving static files from: ${distPath}`);
+    if (fs.existsSync(distPath)) {
+      console.log(`Contents of dist: ${fs.readdirSync(distPath).join(', ')}`);
+    } else {
+      console.error(`CRITICAL: dist directory NOT FOUND at ${distPath}`);
+    }
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      const indexPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        console.error(`CRITICAL: index.html NOT FOUND at ${indexPath}`);
+        res.status(404).send('Frontend build not found');
+      }
     });
   }
 
