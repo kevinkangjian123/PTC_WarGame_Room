@@ -3,15 +3,23 @@ import { Phase, AnalysisResult } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
+if (!process.env.GEMINI_API_KEY) {
+  console.warn('[AI] WARNING: GEMINI_API_KEY is not set. AI features will fail.');
+} else {
+  console.log('[AI] GEMINI_API_KEY detected (length: ' + process.env.GEMINI_API_KEY.length + ')');
+}
+
 export async function analyzeStrategy(
   phase: Phase,
   input: string,
   lang: 'zh' | 'en' = 'zh',
   context?: string
 ): Promise<AnalysisResult> {
-  const model = "gemini-3-flash-preview";
+  console.log(`[AI] Starting analysis - Phase: ${phase}, Lang: ${lang}`);
+  const model = "gemini-1.5-flash";
   
-  const phaseProtocols = {
+  try {
+    const phaseProtocols = {
     0: `Phase 0: 宏观引力沙盘 (Macro Sandbox) - 客观优先原则
     任务: 扫描全行业 2026 预估 CAGR 与 TAM，构建 BCG 矩阵。
     核心要求: 必须保持“冷峻扫描”，严禁在此阶段代入 PTC 产品能力。仅评估赛道本身的吸引力。
@@ -150,7 +158,12 @@ export async function analyzeStrategy(
     }
   });
 
+  console.log('[AI] Analysis completed successfully.');
   return JSON.parse(response.text || '{}');
+} catch (error) {
+  console.error('[AI] Error during Gemini API call:', error);
+  throw error;
+}
 }
 
 const PHASE_NAMES = {

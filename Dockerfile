@@ -11,8 +11,9 @@ RUN npm install
 COPY . .
 
 # Build the frontend and server
-RUN npm run build
-RUN npm run build:server
+RUN echo "Starting frontend build..." && npm run build
+RUN echo "Starting server build..." && npm run build:server
+RUN echo "Build process completed."
 
 # Production image
 FROM node:20-slim
