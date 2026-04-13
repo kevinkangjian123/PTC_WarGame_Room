@@ -115,7 +115,7 @@ export default function App() {
           <div className="flex items-center gap-3 text-war-accent">
             <div className="p-1.5 rounded-xl bg-white border border-war-border ptc-shadow overflow-hidden flex items-center justify-center w-12 h-12">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/PTC_logo.svg/512px-PTC_logo.svg.png" 
+                src="https://logo.clearbit.com/ptc.com?size=200" 
                 alt="PTC Logo" 
                 className="w-full h-auto object-contain"
                 referrerPolicy="no-referrer"
