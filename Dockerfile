@@ -25,6 +25,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install production dependencies
+# We use --include=dev temporarily if we need tsx, or just keep tsx in dependencies
 RUN npm install --omit=dev
 
 # Copy build artifacts and all source code needed for tsx
@@ -33,11 +34,16 @@ COPY --from=builder /app/src ./src
 COPY --from=builder /app/server.ts ./
 COPY --from=builder /app/tsconfig.json ./
 
+# Create necessary directories
+RUN mkdir -p uploads && chmod 777 uploads
+
 # Expose the port
 EXPOSE 3000
 
 # Set environment variables
 ENV NODE_ENV=production
+# Optimize Node memory usage for small containers
+ENV NODE_OPTIONS="--max-old-space-size=450"
 
 # Start the server using the locally installed tsx
 CMD ["npx", "tsx", "server.ts"]
