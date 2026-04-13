@@ -113,14 +113,6 @@ export default function App() {
       <aside className="w-80 border-r border-war-border bg-war-card flex flex-col z-10 ptc-shadow">
         <div className="p-8 border-b border-war-border">
           <div className="flex items-center gap-3 text-war-accent">
-            <div className="p-1.5 rounded-xl bg-white border border-war-border ptc-shadow overflow-hidden flex items-center justify-center w-12 h-12">
-              <img 
-                src="https://logo.clearbit.com/ptc.com?size=200" 
-                alt="PTC Logo" 
-                className="w-full h-auto object-contain"
-                referrerPolicy="no-referrer"
-              />
-            </div>
             <div>
               <h1 className="font-bold text-lg tracking-tight">{t['app.title']}</h1>
               <p className="text-[10px] font-mono text-war-text-light uppercase tracking-widest">{t['app.version']}</p>
