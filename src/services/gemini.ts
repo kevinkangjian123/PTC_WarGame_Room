@@ -16,7 +16,7 @@ export async function analyzeStrategy(
   context?: string
 ): Promise<AnalysisResult> {
   console.log(`[AI] Starting analysis - Phase: ${phase}, Lang: ${lang}`);
-  const model = "gemini-1.5-flash";
+  const model = "gemini-3-flash-preview";
   
   try {
     const phaseProtocols = {

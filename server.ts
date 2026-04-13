@@ -6,7 +6,6 @@ import cors from 'cors';
 import Database from 'better-sqlite3';
 import multer from 'multer';
 import fs from 'node:fs';
-import { analyzeStrategy } from './src/services/gemini';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,18 +62,6 @@ async function startServer() {
   // API Routes
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'PTC War Room Server is running' });
-  });
-
-  // AI Analysis Route
-  app.post('/api/analyze', async (req, res) => {
-    try {
-      const { phase, input, lang, context } = req.body;
-      const result = await analyzeStrategy(phase, input, lang, context);
-      res.json(result);
-    } catch (error) {
-      console.error('AI Analysis error:', error);
-      res.status(500).json({ error: 'Strategic Engine Offline' });
-    }
   });
 
   // Memory Routes

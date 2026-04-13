@@ -25,6 +25,7 @@ import { IntelligenceCard } from './components/IntelligenceCard';
 import { VerdictCard } from './components/VerdictCard';
 import { BCGTable } from './components/BCGTable';
 import { RoadmapCard } from './components/RoadmapCard';
+import { analyzeStrategy } from './services/gemini';
 import { i18n, Lang } from './i18n';
 
 export default function App() {
@@ -68,20 +69,8 @@ export default function App() {
       const lastMemory = memories[0] ? `Previous Win Probability: ${memories[0].last_win_prob}%. Industry: ${memories[0].industry_key}.` : '';
       const combinedInput = fileContent ? `[Document Content: ${fileContent}]\nUser Input: ${input}` : input;
       
-      // Call server-side API instead of direct SDK call
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phase: activePhase,
-          input: combinedInput,
-          lang: lang,
-          context: lastMemory
-        })
-      });
-
-      if (!response.ok) throw new Error('Analysis failed');
-      const data = await response.json();
+      // Call direct SDK service in frontend (Best Practice)
+      const data = await analyzeStrategy(activePhase, combinedInput, lang, lastMemory);
       
       setResult(data);
       
